@@ -136,6 +136,8 @@ class ThereExistsWFF(WFF):
     def clone(self):
         return ThereExistsWFF([b.clone() for b in self.bound], self.child.clone())
 
+#TODO
+#see: http://en.wikipedia.org/wiki/Conjunctive_normal_form#Converting_from_first-order_logic
 def to_nnf(node):
     """To negation normal form"""
     if isinstance(node, AtomicWFF):
@@ -209,6 +211,9 @@ def to_svf(node):
         name = v.name
         while name in already_bound:
             name = increment(name)
+        #substitution is done even when the name is not changed
+        #because the substitution also checks for recursive
+        #binding exception.
         substitute_var(q.child, v, name)
         v.name = name
         already_bound.add(name)
